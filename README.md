@@ -1,3 +1,19 @@
 # Speech_Command_Recognition
 
-Goal of this project is to convert speech commands into text. Used MFCC technique for feature extraction.
+Problem Description:
+The goal of this project is to convert single word speech commands into text. There are a lot of applications for speech recognition today with almost every single device coming in with an inbuilt speech recognition software for instance Alexa, Google home and Siri.
+
+Data Description:
+The data we have used is the official Speech Commands Dataset provided by TensorFlow which can be downloaded from Speech Commands Dataset. This dataset includes 95,000 one second long utterances of 35 short words, by thousands of people. The audio files were collected using crowdsourcing where anyone can contribute to this data. The total size of the data is 2.3 GB compressed and it is divided into folders for each word. The words are simple speech commands people speak (forward, backward, up, down, yes, no, zero, one, two, etc.). There is also a folder in there which includes some audio files containing common background noise (white noise, washing dishes, etc.).
+For our project, we have trimmed down the data to consist of 12 categories. Out of the 35 commands, the 10 commands we have chosen are “forward”, “backward”, “yes”, “no”, “off”, “on”, “up”, “down”, “happy” and “stop”. We have also created a category called “unknown” in which we have fed data for “zero” and “nine”. This category allows us to club various categories into one. There is also a category created called “silence” which includes the background noise data. This helps us identify cases where no commands are spoken and there is just some background noise (for instance white noise). In total, we have considered 41,000 audio files.
+
+Code folder structure:
+Our code is modularized, and we have split the code up into multiple logical files. Here is a reference to the files in the folder: -
+• 1_Audio_preprocessing.ipynb – This contains code for all the preprocessing that was performed on the data. It contains code for resampling the data from 16Khz to 8Khz. It also has logic to slice the background noise files into 1-second audio clips.
+• 2_Audio_Data_Visualization.ipynb – This has all the visualization logic that we wrote. It contains the visualization of the audio and also the Spectrogram. We also show how we can visualize MFCC. This file also contains the visualization showing the majority class. For us, “unknown” is the majority class. We also have visualization depicting the different durations of the recordings.
+• 3_Audio_Augmentation.ipynb – The first thing we show here is how to read and play an audio. We are augmenting data here by adding a random background noise (chosen from the background noise data downloaded with the original dataset) to 500 audio files in every data folder. As a next step, we performed some speed tuning as well. This either slows down or speeds up the audio. This is done so that we can give varied data to the network and also emulate the real-world scenario.
+• 4_Audio_Model1_Conv1D.ipynb – This is our first model which works with the raw data and uses CNN 1D.
+• 5_Audio_Model2_Conv2D.ipynb – In this model, we use Convolution 2D and we do MFCC feature extraction once and feed that data into the network.
+• 6_Audio_Model3_Attention_RNN.ipynb – This is our third model which is based on RNN and uses Attention Mechanism.
+• 7_Create_your_own_recording.ipynb – This gives us the ability to load a saved model (either of the 3 models) and record our own 1 second audio clip. There is code after this which will do the prediction and classify the audio into its class.
+• 8_Model_Architecture_Visualization.ipynb – This contains the visualization for all the 3 models we have built. It shows all the layers in the models.
